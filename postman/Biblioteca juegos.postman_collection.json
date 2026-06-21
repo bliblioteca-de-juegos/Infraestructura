@@ -1,0 +1,1838 @@
+{
+  "info": {
+    "_postman_id": "fa895256-1109-49a9-8e66-6dcb60a14978",
+    "name": "Biblioteca juegos",
+    "description": "Pruebas CRUD de los once microservicios a traves del API Gateway.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53321603",
+    "_collection_link": "https://go.postman.co/collection/53321603-fa895256-1109-49a9-8e66-6dcb60a14978?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "01 Categoria",
+      "item": [
+        {
+          "name": "Crear categoria",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Categoria creada', () => pm.response.to.have.status(201));",
+                  "const categoria = pm.response.json();",
+                  "pm.expect(categoria.descrip).to.eql('Categoria creada por prueba integral');",
+                  "pm.collectionVariables.set('categoriaId', categoria.id);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Postman RPG\",\n  \"descrip\": \"Categoria creada por prueba integral\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8081/api/v2/categorias",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "api",
+                "v2",
+                "categorias"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Modificar categoria",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Categoria modificada', () => pm.response.to.have.status(200));",
+                  "pm.expect(pm.response.json().descrip).to.eql('Categoria modificada');"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Postman RPG actualizado\",\n  \"descrip\": \"Categoria modificada\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8081/api/v2/categorias",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "api",
+                "v2",
+                "categorias"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Consultar categoria",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Categoria consultada', () => pm.response.to.have.status(200));",
+                  "pm.expect(pm.response.json()).to.have.property('descrip');"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8081/api/v2/categorias",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "api",
+                "v2",
+                "categorias"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "02 Clasificacion",
+      "item": [
+        {
+          "name": "Crear clasificacion",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Clasificacion creada', () => pm.response.to.have.status(201));",
+                  "pm.collectionVariables.set('clasificacionId', pm.response.json().id);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pegi\": \"PEGI 12\",\n  \"esrb\": \"T\",\n  \"edadMinima\": 12,\n  \"nombre\": \"Adolescentes Postman\",\n  \"descripcion\": \"Contenido apto desde doce anos\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8093/api/v2/clasificaciones",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8093",
+              "path": [
+                "api",
+                "v2",
+                "clasificaciones"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Modificar clasificacion",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Clasificacion modificada', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pegi\": \"PEGI 12\",\n  \"esrb\": \"T\",\n  \"edadMinima\": 12,\n  \"nombre\": \"Adolescentes actualizado\",\n  \"descripcion\": \"Clasificacion modificada por Postman\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8093/api/v2/clasificaciones",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8093",
+              "path": [
+                "api",
+                "v2",
+                "clasificaciones"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Consultar clasificacion",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Clasificacion consultada', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8093/api/v2/clasificaciones",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8093",
+              "path": [
+                "api",
+                "v2",
+                "clasificaciones"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "03 Usuario y JWT",
+      "item": [
+        {
+          "name": "Registrar usuario",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Usuario registrado', () => pm.response.to.have.status(201));",
+                  "pm.collectionVariables.set('usuarioId', pm.response.json().id);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Usuario\",\n  \"apellido\": \"Postman\",\n  \"email\": \"{{testEmail}}\",\n  \"password\": \"{{testPassword}}\",\n  \"nombreUsuario\": \"{{testUser}}\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8083/api/v2/auth/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8083",
+              "path": [
+                "api",
+                "v2",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Iniciar sesion",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Login correcto', () => pm.response.to.have.status(200));",
+                  "pm.collectionVariables.set('token', pm.response.json().token);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombreUsuario\": \"{{testUser}}\",\n  \"password\": \"{{testPassword}}\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8083/api/v2/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8083",
+              "path": [
+                "api",
+                "v2",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Consultar usuario",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Usuario consultado', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8083/api/v2/usuarios",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8083",
+              "path": [
+                "api",
+                "v2",
+                "usuarios"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Modificar usuario autenticado",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Usuario modificado con JWT', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombre\": \"Usuario actualizado\",\n  \"apellido\": \"Postman\",\n  \"email\": \"{{testEmail}}\",\n  \"password\": \"{{testPassword}}\",\n  \"nombreUsuario\": \"{{testUser}}\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8083/api/v2/usuarios",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8083",
+              "path": [
+                "api",
+                "v2",
+                "usuarios"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "04 Juegos",
+      "item": [
+        {
+          "name": "Crear juego",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Juego creado', () => pm.response.to.have.status(201));",
+                  "pm.collectionVariables.set('juegoId', pm.response.json().id);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Juego Postman\",\n  \"descripcion\": \"Juego creado para verificar integraciones\",\n  \"precio\": 14990,\n  \"categoriaId\": {{categoriaId}},\n  \"clasificacionId\": {{clasificacionId}}\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8082/api/v2/juegos",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "v2",
+                "juegos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Modificar juego",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Juego modificado', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Juego Postman actualizado\",\n  \"descripcion\": \"Juego modificado mediante API Gateway\",\n  \"precio\": 12990,\n  \"categoriaId\": {{categoriaId}},\n  \"clasificacionId\": {{clasificacionId}}\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8082/api/v2/juegos",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "v2",
+                "juegos"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Consultar juego",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Juego consultado', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8082/api/v2/juegos",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8082",
+              "path": [
+                "api",
+                "v2",
+                "juegos"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "05 Descripcion comercial",
+      "item": [
+        {
+          "name": "Crear descripcion",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Descripcion creada', () => pm.response.to.have.status(201));",
+                  "pm.collectionVariables.set('descripcionId', pm.response.json().id);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"juegoId\": 48,\n  \"tituloComercial\": \"Aventura Postman\",\n  \"descripcion\": \"Descripcion comercial creada en la prueba\",\n  \"requisitos\": \"Java 21\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8091/api/v2/descripciones-comerciales",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8091",
+              "path": [
+                "api",
+                "v2",
+                "descripciones-comerciales"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Modificar descripcion",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Descripcion modificada', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"juegoId\": {{juegoId}},\n  \"tituloComercial\": \"Aventura Postman actualizada\",\n  \"descripcion\": \"Descripcion comercial modificada\",\n  \"requisitos\": \"Java 21 y MySQL\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8091/api/v2/descripciones-comerciales",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8091",
+              "path": [
+                "api",
+                "v2",
+                "descripciones-comerciales"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Consultar descripcion",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Descripcion consultada', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8091/api/v2/descripciones-comerciales",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8091",
+              "path": [
+                "api",
+                "v2",
+                "descripciones-comerciales"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar descripcion",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Descripcion eliminada', () => pm.response.to.have.status(204));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8091/api/v2/descripciones-comerciales/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8091",
+              "path": [
+                "api",
+                "v2",
+                "descripciones-comerciales",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "06 Biblioteca",
+      "item": [
+        {
+          "name": "Agregar a biblioteca",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Juego agregado a biblioteca', () => pm.response.to.have.status(201));",
+                  "pm.collectionVariables.set('bibliotecaId', pm.response.json().id);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usuarioId\": 1,\n  \"juegoId\": 42,\n  \"origen\": \"COMPRA\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8089/api/v2/biblioteca",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8089",
+              "path": [
+                "api",
+                "v2",
+                "biblioteca"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Consultar biblioteca",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Biblioteca consultada', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8089/api/v2/biblioteca",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8089",
+              "path": [
+                "api",
+                "v2",
+                "biblioteca"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar de biblioteca",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Elemento de biblioteca eliminado', () => pm.response.to.have.status(204));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8089/api/v2/biblioteca",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8089",
+              "path": [
+                "api",
+                "v2",
+                "biblioteca"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "07 Carrito",
+      "item": [
+        {
+          "name": "Agregar al carrito",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Juego agregado al carrito', () => pm.response.to.have.status(201));",
+                  "pm.collectionVariables.set('carritoId', pm.response.json().id);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usuarioId\": {{usuarioId}},\n  \"juegoId\": {{juegoId}},\n  \"cantidad\": 1\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8088/api/v2/carrito",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8088",
+              "path": [
+                "api",
+                "v2",
+                "carrito"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Modificar cantidad",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Cantidad modificada', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cantidad\": 2\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8088/api/v2/carrito",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8088",
+              "path": [
+                "api",
+                "v2",
+                "carrito"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Consultar carrito",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Carrito consultado', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8088/api/v2/carrito",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8088",
+              "path": [
+                "api",
+                "v2",
+                "carrito"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar del carrito",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Elemento del carrito eliminado', () => pm.response.to.have.status(204));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8088/api/v2/carrito/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8088",
+              "path": [
+                "api",
+                "v2",
+                "carrito",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "08 Horas jugadas",
+      "item": [
+        {
+          "name": "Crear horas jugadas",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Horas creadas', () => pm.response.to.have.status(201));",
+                  "pm.collectionVariables.set('horasId', pm.response.json().id);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usuarioId\": 1,\n  \"juegoId\": 42,\n  \"minutosJugados\": 60\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8084/api/v2/horas-jugadas",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8084",
+              "path": [
+                "api",
+                "v2",
+                "horas-jugadas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Modificar horas jugadas",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Horas modificadas', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usuarioId\": 1,\n  \"juegoId\": 42,\n  \"minutosJugados\": 120\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8084/api/v2/horas-jugadas/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8084",
+              "path": [
+                "api",
+                "v2",
+                "horas-jugadas",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Consultar horas jugadas",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Horas consultadas', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8084/api/v2/horas-jugadas",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8084",
+              "path": [
+                "api",
+                "v2",
+                "horas-jugadas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar horas jugadas",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Horas eliminadas', () => pm.response.to.have.status(204));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8084/api/v2/horas-jugadas/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8084",
+              "path": [
+                "api",
+                "v2",
+                "horas-jugadas",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "09 Logros",
+      "item": [
+        {
+          "name": "Crear logro",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Logro creado', () => pm.response.to.have.status(201));",
+                  "pm.collectionVariables.set('logroId', pm.response.json().id);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"juegoId\": 42,\n  \"nombre\": \"Primer logro Postman\",\n  \"descripcion\": \"Logro creado en prueba integral\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8085/api/v2/logros",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8085",
+              "path": [
+                "api",
+                "v2",
+                "logros"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Modificar logro",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Logro modificado', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"juegoId\": 42,\n  \"nombre\": \"Logro Postman actualizado\",\n  \"descripcion\": \"Logro modificado\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8085/api/v2/logros/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8085",
+              "path": [
+                "api",
+                "v2",
+                "logros",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Consultar progreso",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Progreso consultado', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8085/api/v2/logros",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8085",
+              "path": [
+                "api",
+                "v2",
+                "logros"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar logro",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Logro eliminado', () => pm.response.to.have.status(204));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8085/api/v2/logros",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8085",
+              "path": [
+                "api",
+                "v2",
+                "logros"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "10 Resenas",
+      "item": [
+        {
+          "name": "Crear resena",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Resena creada', () => pm.response.to.have.status(201));",
+                  "pm.collectionVariables.set('resenaId', pm.response.json().id);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usuarioId\": 1,\n  \"juegoId\": 43,\n  \"comentario\": \"Resena creada desde Postman\",\n  \"calificacion\": 4\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8086/api/v2/resenas",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8086",
+              "path": [
+                "api",
+                "v2",
+                "resenas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Modificar resena",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Resena modificada', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usuarioId\": {{usuarioId}},\n  \"juegoId\": {{juegoId}},\n  \"comentario\": \"Resena actualizada desde Postman\",\n  \"calificacion\": 5\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v2/resenas/{{resenaId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "resenas",
+                "{{resenaId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Consultar resena",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Resena consultada', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8086/api/v2/resenas",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8086",
+              "path": [
+                "api",
+                "v2",
+                "resenas"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar resena",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Resena eliminada', () => pm.response.to.have.status(204));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8086/api/v2/resenas/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8086",
+              "path": [
+                "api",
+                "v2",
+                "resenas",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "11 Lista de deseados",
+      "item": [
+        {
+          "name": "Agregar a deseados",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Deseado creado', () => pm.response.to.have.status(201));",
+                  "pm.collectionVariables.set('deseadoId', pm.response.json().id);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"usuarioId\": 1,\n  \"juegoId\": 42\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8087/api/v2/lista-deseados",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8087",
+              "path": [
+                "api",
+                "v2",
+                "lista-deseados"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Consultar deseado",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Deseado consultado', () => pm.response.to.have.status(200));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8087/api/v2/lista-deseados",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8087",
+              "path": [
+                "api",
+                "v2",
+                "lista-deseados"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar de deseados",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Deseado eliminado', () => pm.response.to.have.status(204));"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8087/api/v2/lista-deseados/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8087",
+              "path": [
+                "api",
+                "v2",
+                "lista-deseados",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "12 Limpieza final",
+      "item": [
+        {
+          "name": "Eliminar juego",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Juego eliminado', () => pm.response.to.have.status(204));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v2/juegos/{{juegoId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "juegos",
+                "{{juegoId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar usuario autenticado",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Usuario eliminado con JWT', () => pm.response.to.have.status(204));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v2/usuarios/{{usuarioId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "usuarios",
+                "{{usuarioId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar clasificacion",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Clasificacion eliminada', () => pm.response.to.have.status(204));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v2/clasificaciones/{{clasificacionId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "clasificaciones",
+                "{{clasificacionId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar categoria",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Categoria eliminada', () => pm.response.to.have.status(204));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v2/categorias/{{categoriaId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v2",
+                "categorias",
+                "{{categoriaId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "if (!pm.collectionVariables.get('testUser')) {",
+          "  const suffix = Date.now();",
+          "  pm.collectionVariables.set('testUser', 'postman_' + suffix);",
+          "  pm.collectionVariables.set('testEmail', 'postman_' + suffix + '@biblioteca.cl');",
+          "}"
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://127.0.0.1:8080"
+    },
+    {
+      "key": "testPassword",
+      "value": "ClavePostman123"
+    },
+    {
+      "key": "testUser",
+      "value": ""
+    },
+    {
+      "key": "testEmail",
+      "value": ""
+    },
+    {
+      "key": "categoriaId",
+      "value": ""
+    },
+    {
+      "key": "descripcionId",
+      "value": ""
+    },
+    {
+      "key": "clasificacionId",
+      "value": ""
+    },
+    {
+      "key": "usuarioId",
+      "value": ""
+    },
+    {
+      "key": "bibliotecaId",
+      "value": ""
+    },
+    {
+      "key": "carritoId",
+      "value": ""
+    },
+    {
+      "key": "horasId",
+      "value": ""
+    },
+    {
+      "key": "resenaId",
+      "value": ""
+    },
+    {
+      "key": "deseadoId",
+      "value": ""
+    },
+    {
+      "key": "logroId",
+      "value": ""
+    }
+  ]
+}
