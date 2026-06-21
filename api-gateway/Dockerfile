@@ -6,7 +6,9 @@ COPY .mvn/ .mvn/
 COPY mvnw pom.xml ./
 COPY eureka-server/pom.xml eureka-server/pom.xml
 COPY api-gateway/pom.xml api-gateway/pom.xml
-RUN chmod +x mvnw && ./mvnw -q -pl api-gateway -am -DskipTests dependency:go-offline
+RUN sed -i 's/\r$//' mvnw \
+    && chmod +x mvnw \
+    && ./mvnw -q -pl api-gateway -am -DskipTests dependency:go-offline
 
 COPY api-gateway/src/ api-gateway/src/
 RUN ./mvnw -q -pl api-gateway -am -DskipTests package
