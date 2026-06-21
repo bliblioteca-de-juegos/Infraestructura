@@ -30,18 +30,18 @@
       "item": [
         {
           "name": "Crear categoria",
-          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"nombre\": \"Postman RPG\",\n  \"descricao\": \"Categoria creada por prueba integral\"\n}" }, "url": "{{baseUrl}}/api/v2/categorias" },
-          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Categoria creada', () => pm.response.to.have.status(201));", "pm.collectionVariables.set('categoriaId', pm.response.json().id);"] } }]
+          "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"nombre\": \"Postman RPG\",\n  \"descrip\": \"Categoria creada por prueba integral\"\n}" }, "url": "{{baseUrl}}/api/v2/categorias" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Categoria creada', () => pm.response.to.have.status(201));", "const categoria = pm.response.json();", "pm.expect(categoria.descrip).to.eql('Categoria creada por prueba integral');", "pm.collectionVariables.set('categoriaId', categoria.id);"] } }]
         },
         {
           "name": "Modificar categoria",
-          "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"nombre\": \"Postman RPG actualizado\",\n  \"descricao\": \"Categoria modificada\"\n}" }, "url": "{{baseUrl}}/api/v2/categorias/{{categoriaId}}" },
-          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Categoria modificada', () => pm.response.to.have.status(200));"] } }]
+          "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"nombre\": \"Postman RPG actualizado\",\n  \"descrip\": \"Categoria modificada\"\n}" }, "url": "{{baseUrl}}/api/v2/categorias/{{categoriaId}}" },
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Categoria modificada', () => pm.response.to.have.status(200));", "pm.expect(pm.response.json().descrip).to.eql('Categoria modificada');"] } }]
         },
         {
           "name": "Consultar categoria",
           "request": { "method": "GET", "url": "{{baseUrl}}/api/v2/categorias/{{categoriaId}}" },
-          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Categoria consultada', () => pm.response.to.have.status(200));"] } }]
+          "event": [{ "listen": "test", "script": { "exec": ["pm.test('Categoria consultada', () => pm.response.to.have.status(200));", "pm.expect(pm.response.json()).to.have.property('descrip');"] } }]
         }
       ]
     },
