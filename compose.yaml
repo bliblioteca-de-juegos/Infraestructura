@@ -1,0 +1,231 @@
+name: biblioteca-juegos
+
+services:
+  mysql:
+    image: mysql:8.4
+    environment:
+      MYSQL_ROOT_PASSWORD: biblioteca
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./docker/mysql/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-pbiblioteca"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    restart: unless-stopped
+
+  eureka-server:
+    build:
+      context: .
+      dockerfile: eureka-server/Dockerfile
+    ports:
+      - "8761:8761"
+    restart: unless-stopped
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: api-gateway/Dockerfile
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+    ports:
+      - "8080:8080"
+    depends_on:
+      - eureka-server
+    restart: unless-stopped
+
+  ms-categoria:
+    build:
+      context: https://github.com/bliblioteca-de-juegos/Ms_Categoria.git#main
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/categorias_Juegos_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: biblioteca
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      MS_JUEGOS_URL: ${PUBLIC_GATEWAY_URL:-http://localhost:8080}
+    ports:
+      - "8081:8081"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_started
+    restart: unless-stopped
+
+  ms-juegos:
+    build:
+      context: https://github.com/bliblioteca-de-juegos/ms-Juegos.git#main
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/juegos_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: biblioteca
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      MS_CATEGORIA_URL: ${PUBLIC_GATEWAY_URL:-http://localhost:8080}
+      MS_CLASIFICACION_URL: ${PUBLIC_GATEWAY_URL:-http://localhost:8080}
+    ports:
+      - "8082:8082"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_started
+    restart: unless-stopped
+
+  ms-usuario:
+    build:
+      context: https://github.com/bliblioteca-de-juegos/Ms-Usuario.git#main
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/usuarios_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: biblioteca
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+    ports:
+      - "8083:8083"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_started
+    restart: unless-stopped
+
+  ms-horas-jugadas:
+    build:
+      context: https://github.com/bliblioteca-de-juegos/MS-Horas-jugadas.git#main
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/horas_jugadas_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: biblioteca
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+    ports:
+      - "8084:8084"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_started
+    restart: unless-stopped
+
+  ms-logros:
+    build:
+      context: https://github.com/bliblioteca-de-juegos/MS-Logros.git#main
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/logros_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: biblioteca
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+    ports:
+      - "8085:8085"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_started
+    restart: unless-stopped
+
+  ms-resenas:
+    build:
+      context: https://github.com/bliblioteca-de-juegos/MS-Resenas.git#main
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/resenas_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: biblioteca
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+    ports:
+      - "8086:8086"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_started
+    restart: unless-stopped
+
+  ms-lista-deseados:
+    build:
+      context: https://github.com/bliblioteca-de-juegos/MS-Lista-deseados.git#main
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/lista_deseados_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: biblioteca
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+    ports:
+      - "8087:8087"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_started
+    restart: unless-stopped
+
+  ms-carrito:
+    build:
+      context: https://github.com/bliblioteca-de-juegos/MS-Carrito.git#main
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/carrito_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: biblioteca
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+    ports:
+      - "8088:8088"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_started
+    restart: unless-stopped
+
+  ms-biblioteca:
+    build:
+      context: https://github.com/bliblioteca-de-juegos/Ms-Biblioteca.git#main
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/biblioteca_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: biblioteca
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+    ports:
+      - "8089:8089"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_started
+    restart: unless-stopped
+
+  ms-descripcion-comercial:
+    build:
+      context: https://github.com/bliblioteca-de-juegos/Ms-Descripcion-comecial.git#main
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/descripcion_comercial_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: biblioteca
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+    ports:
+      - "8091:8091"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_started
+    restart: unless-stopped
+
+  ms-clasificacion:
+    build:
+      context: https://github.com/bliblioteca-de-juegos/Ms-Clasificacion.git#main
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/clasificacion_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: biblioteca
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka/
+    ports:
+      - "8093:8093"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      eureka-server:
+        condition: service_started
+    restart: unless-stopped
+
+volumes:
+  mysql-data:
